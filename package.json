@@ -1,0 +1,1 @@
+{"description":"TypeScript + 原生 WebGL2 方向光 Shadow Map 最小渲染管线（地面平面 + 旋转立方体）","devDependencies":{"typescript":"^5.9.0","vite":"^6.0.0"},"name":"webgl2-shadow-pipeline","private":true,"scripts":{"build":"tsc --noEmit && vite build","dev":"vite","preview":"vite preview"},"type":"module","version":"0.1.0"}
