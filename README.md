@@ -2,7 +2,7 @@
 
 TypeScript + 原生 WebGL2 的方向光 Shadow Map 最小渲染管线：**地面平面 + 旋转立方体 + 方向光阴影**的最小闭环。
 
-技术栈：TypeScript + 原生 WebGL2，零重型渲染引擎依赖；数学库可选 gl-matrix 或自带轻量 mat4 工具（待定，见 Devin 任务 1）。开发服务器与构建用 Vite（仅开发依赖，不参与渲染）。
+技术栈：TypeScript + 原生 WebGL2，零重型渲染引擎依赖；矩阵用自带的轻量 `src/core/mat4.ts`（列主序，perspective / lookAt / ortho / rotationY / translation），未引入 gl-matrix。开发服务器与构建用 Vite（仅开发依赖，不参与渲染）。
 
 ## 目录结构
 
@@ -58,15 +58,13 @@ npm run preview  # 预览构建产物
 
 ## 当前状态
 
-已完成：`Framebuffer`、`RenderPass`（队列 + 上下文）、`ShaderProgram`、两个 Pass、入口组装与工程配置（`package.json` / `tsconfig.json` / `index.html`）。
-
-待补（Devin 任务 1）：`Primitives.ts` 目前只有函数签名桩（调用即抛 `TODO` 错误）；`main.ts` 里场景网格为空、相机/光源矩阵为占位。跑通前先完成任务 1。
+已完成：`Framebuffer`、`RenderPass`（队列 + 上下文）、`ShaderProgram`、两个 Pass、入口组装与工程配置（`package.json` / `tsconfig.json` / `index.html`），以及任务 1：`Primitives.ts`（1 个地面平面 + 3 个旋转立方体）、自带轻量 `mat4`、相机与光源矩阵已接入 `main.ts`，`npm run build` 与无头 Chromium 渲染截图验证通过（见任务 1）。
 
 ## Devin 任务拆分与验收清单
 
-### 任务 1：补全场景与矩阵，跑通本地预览
+### 任务 1：补全场景与矩阵，跑通本地预览（已完成）
 
-补全 `Primitives.ts`（地面平面 + 2~3 个旋转立方体）与轻量矩阵计算（或引入 gl-matrix），在 `main.ts` 中接入网格、每帧更新立方体旋转矩阵与相机/光源视图投影矩阵，跑通 `npm run dev` 本地预览。
+`Primitives.ts`（地面平面 + 3 个旋转立方体）与轻量矩阵计算（自带 `src/core/mat4.ts`，未引 gl-matrix）已补全，`main.ts` 中已接入网格、每帧更新立方体旋转矩阵与相机/光源视图投影矩阵；`npm run dev` 本地预览与 `npm run build` 均已验证，另用无头 Chromium 截取两帧渲染画面核对：画面含地面、三个不同颜色立方体及阴影，两帧像素有差异（立方体在旋转）。
 
 ### 任务 2：验证 ShadowDepthPass 输出
 
